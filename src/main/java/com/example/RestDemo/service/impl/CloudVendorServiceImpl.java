@@ -1,5 +1,6 @@
 package com.example.RestDemo.service.impl;
 
+import com.example.RestDemo.exception.CloudVendorNotFoundException;
 import com.example.RestDemo.model.CloudVendor;
 import com.example.RestDemo.repository.CloudVendorRepository;
 import com.example.RestDemo.service.CloudVendorService;
@@ -33,6 +34,10 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 
     @Override
     public CloudVendor getCloudVendor(String vendorId) {
+        if(cloudVendorRepository.findById(vendorId).isEmpty()){
+            throw new CloudVendorNotFoundException("Request file not found in Data Base");
+        }
+
 
         return  cloudVendorRepository.findById(vendorId).get();
     }
